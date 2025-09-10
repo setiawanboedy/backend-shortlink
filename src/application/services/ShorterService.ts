@@ -30,7 +30,7 @@ export class ShorterService implements IShorterService {
   }
 
   async createShorter(params: createShorter): Promise<ShortResponse> {
-    const shortLink = this.converShortLink(params.link);
+    const shortLink = nanoid(5);
     const shortData: createShortLink = {
       name: params.name,
       link: params.link,
@@ -40,14 +40,4 @@ export class ShorterService implements IShorterService {
     return ShortMapping.toResponse(shorter);
   }
 
-  private converShortLink(link: string): string {
-    const keySet: Set<String> = new Set();
-    const shortURLs: { [key: string]: string } = {};
-    const key = nanoid(5);
-    if (keySet.has(key)) throw new Error("key is duplicate");
-    keySet.add(key);
-    shortURLs[key] = link;
-    const shortUrl = `${key}`;
-    return shortUrl;
-  }
 }

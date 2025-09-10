@@ -6,7 +6,11 @@ const prisma = new PrismaClient();
 
 export class PrismaRepository implements ShortRepository {
     async getAll(): Promise<Shorter[]> {
-        const shorters = await prisma.shorter.findMany();
+        const shorters = await prisma.shorter.findMany({
+            orderBy: {
+                createdAt: 'desc'
+            }
+        });
         return shorters
     }
     async findById(id: string): Promise<Shorter | null> {
